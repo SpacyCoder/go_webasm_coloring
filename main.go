@@ -144,5 +144,4 @@ func fitnessLineColor(color1 string, color2 string) string {
 	} else {
 		return "#FF0000"
 	}
-
 }
