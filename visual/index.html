@@ -1,0 +1,151 @@
+<html>
+
+<head>
+    <title>Testing WebAssembly</title>
+    <script src="wasm_exec.js"></script>
+    <script>
+        const go = new Go();
+        WebAssembly.instantiateStreaming(fetch('main.wasm'), go.importObject).then(res => {
+            go.run(res.instance)
+        })
+    </script>
+    <style>
+        #canvas {
+            margin-top: 20px;
+        }
+
+        #toolbar {
+            margin: 10px 0;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body {
+            background: rgba(0, 0, 0, 0.01);
+        }
+
+        table {
+            margin: 50px auto;
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="toolbar">
+        <div>Generations:
+            <input type="text" id="numGenerations" value="20" style="padding: 15px;
+            width: 58px;
+            margin-right: 10px;">
+        </div>
+        <div>Nodes:
+            <input type="text" id="numNodes" value="100" style="padding: 15px;">
+        </div>
+        <button onclick="runAlgorithms()" style="    padding: 15px;
+        background: white;
+        border: none;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        border-radius: 5px;
+        font-weight: 600;
+        cursor: pointer; margin-left: 20px;">RUN ALGORITHMS</button>
+    </div>
+
+    <div>
+        <div>
+            <h3>One Point Crossover</h3>
+        </div>
+        <div style="margin: 5px">
+            <label for="onePointTime">Time: </label>
+            <input type="text" id="onePointTime" style="border: none"></input>
+        </div>
+
+        <div style="margin: 5px">
+            <label for="onePointFitness">Fitness: </label>
+            <input type="text" id="onePointFitness" style="border: none"></input>
+        </div>
+    </div>
+    <canvas id="canvas1" width="1700" height="1000"></canvas>
+
+    <div>
+        <div>
+            <h3>Two Point Crossover</h3>
+        </div>
+        <div style="margin: 5px">
+            <label for="twoPointTime">Time: </label>
+            <input type="text" id="twoPointTime" style="border: none">
+        </div>
+        <div style="margin: 5px">
+            <label for="twoPointFitness">Fitness: </label>
+            <input type="text" id="twoPointFitness" style="border: none"></input>
+        </div>
+    </div>
+
+    <canvas id="canvas2" width="1700" height="1000"></canvas>
+
+
+    
+    <h3 style="width: 100%;text-align: center">Find average</h3>
+    <div id="toolbar">
+        <div>
+            Iterations: 
+            <input type="text" id="iterations" value="100" style="padding: 15px;
+                width: 100px;
+                margin: 0 10px;">
+        </div>
+        <div>Generations:
+            <input type="text" id="numGenerationsAvg" value="20" style="padding: 15px;
+            width: 58px;
+            margin-right: 10px;">
+        </div>
+        <div>Nodes:
+            <input type="text" id="numNodesAvg" value="100" style="padding: 15px;">
+        </div>
+        <button onclick="runAlgorithmsAvg()" style="padding: 15px;
+        background: white;
+        border: none;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        border-radius: 5px;
+        font-weight: 600;
+        cursor: pointer; margin-left: 20px;">RUN ALGORITHMS</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>One Point</th>
+                <th>Two Point</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Time(seconds)</td>
+                <td id="avgTimeOne"></td>
+                <td id="avgTimeTwo"></td>
+            </tr>
+            <tr>
+                <td>Fitness</td>
+                <td id="avgFitnessOne"></td>
+                <td id="avgFitnessTwo"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
